@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
 
+    public LevelManager levelManager;
+
     // Awake is called before the first frame update
     void Awake()
     {
@@ -17,6 +19,8 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        levelManager = GetComponent<LevelManager>();
 
         DontDestroyOnLoad(gameObject);
     }

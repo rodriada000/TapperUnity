@@ -7,16 +7,15 @@ public class Player : MonoBehaviour
 
     public LayerMask blockingLayer;
     public float restartLevelDelay = 1f;
-    public float ShiftTime = 0.75f;
+    public float ShiftDelay = 0.5f;
     public float ShiftSpeed = 50f;
     public float RunSpeed = 4f;
     public bool IsRunning;
     public bool IsFacingLeft;
     public bool IsShifting;
-
     public int CurrentTapIndex;
 
-    private float inverseMoveTime;
+
     private Rigidbody2D rBody;
     private BoxCollider2D boxCollider;
     private Animator animator;
@@ -27,7 +26,6 @@ public class Player : MonoBehaviour
     {
         boxCollider = GetComponent<BoxCollider2D>();
         rBody = GetComponent<Rigidbody2D>();
-        inverseMoveTime = 1 / ShiftTime;
         animator = GetComponent<Animator>();    
 
         IsRunning = false;
@@ -91,7 +89,7 @@ public class Player : MonoBehaviour
         {
             if (!IsShifting && yDir != 0)
             {
-                ShiftToBarTap(yDir);
+                ShiftToNextBarTap(yDir);
             } 
             else if (xDir != 0)
             {
@@ -106,7 +104,7 @@ public class Player : MonoBehaviour
         return false;
     }
 
-    private void ShiftToBarTap(int yDir)
+    private void ShiftToNextBarTap(int yDir)
     {
         if (IsShifting)
         {
@@ -129,9 +127,22 @@ public class Player : MonoBehaviour
         BarTap foundTap = null;
         bool isFound = false;
 
+        BarTap firstTap = null;
+        BarTap lastTap = null;
+
         for (int i = 0; i < taps.Length; i++)
         {
             foundTap = taps[i].GetComponent<BarTap>();
+
+            if (foundTap.tapIndex == 1)
+            {
+                firstTap = foundTap;
+            }
+
+            if (lastTap == null || foundTap.tapIndex > lastTap.tapIndex)
+            {
+                lastTap = foundTap;
+            }
 
             if (foundTap.tapIndex == nextTapIndex)
             {
@@ -140,7 +151,20 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (isFound && !IsShifting)
+        if (!isFound && nextTapIndex < firstTap.tapIndex) 
+        {
+            isFound = true;
+            nextTapIndex = lastTap.tapIndex;
+            foundTap = lastTap;
+        } 
+        else if (!isFound && nextTapIndex > lastTap.tapIndex)
+        {
+            isFound = true;
+            nextTapIndex = firstTap.tapIndex;
+            foundTap = firstTap;
+        }
+
+        if (isFound)
         {
             CurrentTapIndex = nextTapIndex;
             StartCoroutine(DoShift(foundTap.transform.position));
@@ -150,7 +174,7 @@ public class Player : MonoBehaviour
 
     protected IEnumerator DoShift(Vector3 end)
     {
-        float halfShiftTime = ShiftTime * 0.5f;
+        float halfShiftTime = ShiftDelay * 0.5f;
 
         IsShifting = true;
         animator.SetTrigger("playerShift");
