@@ -7,11 +7,14 @@ public class Player : MonoBehaviour
 
     public LayerMask blockingLayer;
     public float restartLevelDelay = 1f;
-    public float ShiftTime = 0.1f;
+    public float ShiftTime = 0.75f;
+    public float ShiftSpeed = 50f;
     public float RunSpeed = 4f;
     public bool IsRunning;
     public bool IsFacingLeft;
     public bool IsShifting;
+
+    public int CurrentTapIndex;
 
     private float inverseMoveTime;
     private Rigidbody2D rBody;
@@ -42,36 +45,34 @@ public class Player : MonoBehaviour
         horizontal = (int) Input.GetAxisRaw("Horizontal");
         vertical = (int) Input.GetAxisRaw("Vertical");   
 
-        FlipPlayerIfNeeded(horizontal);
+        FlipSpriteBasedOnHorizontalInput(horizontal);
 
-
-        if (horizontal != 0 || vertical != 0)
-        {
-            if (horizontal != 0)
-                vertical = 0; 
-  
-            AttemptMove<Wall>(horizontal, vertical);
-        }
+        AttemptMove<Wall>(horizontal, vertical);
 
         animator.SetBool("isRunning", IsRunning);
     }
 
-    void FlipPlayerIfNeeded(int horizontalDir)
+    void FlipSpriteBasedOnHorizontalInput(int horizontalDir)
     {
+        bool doFlip = false;
+
         if (!IsFacingLeft && horizontalDir < 0)
         {
             IsFacingLeft = true;
-            Vector3 theScale = transform.localScale;
-            theScale.x *= -1;
-            transform.localScale = theScale;
+            doFlip = true;
         }
         else if (IsFacingLeft && horizontalDir > 0)
         {
             IsFacingLeft = false;
+            doFlip = true;
+        }
+
+        if (doFlip)
+        {
             Vector3 theScale = transform.localScale;
             theScale.x *= -1;
             transform.localScale = theScale;
-        }   
+        }
     }
 
     
@@ -90,14 +91,10 @@ public class Player : MonoBehaviour
         {
             if (!IsShifting && yDir != 0)
             {
-                // smooth animation movement up and down
-                IsShifting = true;
-                animator.SetTrigger("playerShift");
-                StartCoroutine(SmoothMovement(end));
+                ShiftToBarTap(yDir);
             } 
             else if (xDir != 0)
             {
-                // normal movement left or right for walking
                 IsRunning = true;
                 Vector3 newPosition = Vector3.MoveTowards(rBody.position, end, RunSpeed * Time.deltaTime);
                 rBody.MovePosition(newPosition);
@@ -109,24 +106,77 @@ public class Player : MonoBehaviour
         return false;
     }
 
-    protected IEnumerator SmoothMovement(Vector3 end)
+    private void ShiftToBarTap(int yDir)
     {
-        float sqrRemainingDistance = (transform.position - end).sqrMagnitude;
-
-        while (sqrRemainingDistance > float.Epsilon)
+        if (IsShifting)
         {
-            Vector3 newPosition = Vector3.MoveTowards(rBody.position, end, inverseMoveTime * Time.deltaTime);
-            rBody.MovePosition(newPosition);
-            sqrRemainingDistance = (transform.position - end).sqrMagnitude;
-
-            yield return null;
+            return; // don't do anything if already shifting
         }
+        
+        int nextTapIndex = CurrentTapIndex;
+
+        if (yDir < 0)
+        {
+            nextTapIndex ++;
+        }
+        else if (yDir > 0)
+        {
+            nextTapIndex --;
+        }
+
+        GameObject[] taps = GameObject.FindGameObjectsWithTag("BarTap");
+
+        BarTap foundTap = null;
+        bool isFound = false;
+
+        for (int i = 0; i < taps.Length; i++)
+        {
+            foundTap = taps[i].GetComponent<BarTap>();
+
+            if (foundTap.tapIndex == nextTapIndex)
+            {
+                isFound = true;
+                break;
+            }
+        }
+
+        if (isFound && !IsShifting)
+        {
+            CurrentTapIndex = nextTapIndex;
+            StartCoroutine(DoShift(foundTap.transform.position));
+        }
+
+    }
+
+    protected IEnumerator DoShift(Vector3 end)
+    {
+        float halfShiftTime = ShiftTime * 0.5f;
+
+        IsShifting = true;
+        animator.SetTrigger("playerShift");
+
+        yield return new WaitForSeconds(halfShiftTime);
+
+        Vector3 newPosition = Vector3.MoveTowards(rBody.position, end, ShiftSpeed);
+        rBody.MovePosition(newPosition);
+
+        yield return new WaitForSeconds(halfShiftTime);
 
         IsShifting = false;
     }
 
     protected virtual void AttemptMove<T> (int xDir, int yDir) where T : Component
     {
+        if (xDir == 0 && yDir == 0)
+        {
+            return;
+        }
+
+        if (xDir != 0)
+        {
+            yDir = 0;
+        }
+
         RaycastHit2D hit;
         bool canMove = Move(xDir, yDir, out hit);
 
