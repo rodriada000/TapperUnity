@@ -6,6 +6,8 @@ public class Player : MonoBehaviour
 {
 
     public LayerMask blockingLayer;
+    public LayerMask itemsLayer;    
+
     public float restartLevelDelay = 1f;
     public float ShiftDelay = 0.5f;
     public float ShiftSpeed = 50f;
@@ -14,12 +16,19 @@ public class Player : MonoBehaviour
     public bool IsFacingLeft;
     public bool IsShifting;
     public int CurrentTapIndex;
+    public bool IsAtCurrentBarTap;
+    
+    public float FillSpeed = 0.05f;
+    public int FillPercent = 0;
+    public bool IsFillingBeer;
+    public bool IsIdleWithBeer;
 
 
     private Rigidbody2D rBody;
     private BoxCollider2D boxCollider;
     private Animator animator;
     private int levelScore;
+
 
     // Start is called before the first frame update
     protected void Start()
@@ -31,6 +40,14 @@ public class Player : MonoBehaviour
         IsRunning = false;
         IsShifting = false;
         IsFacingLeft = false;
+        IsFillingBeer = false;
+        IsAtCurrentBarTap = false;
+
+        IsIdleWithBeer = false;
+        animator.SetBool("isIdleWithBeer", IsIdleWithBeer);
+
+        IsFillingBeer = false;
+        animator.SetBool("isFillingBeer", IsFillingBeer);
     }
 
     // Update is called once per frame
@@ -40,37 +57,170 @@ public class Player : MonoBehaviour
         int vertical = 0;
         IsRunning = false;
 
-        horizontal = (int) Input.GetAxisRaw("Horizontal");
-        vertical = (int) Input.GetAxisRaw("Vertical");   
+        horizontal = (int)Input.GetAxisRaw("Horizontal");
+        vertical = (int)Input.GetAxisRaw("Vertical");
+
+        bool pourPressed = Input.GetButton("Pour");
+        bool servePressed = Input.GetButton("Serve");
+
+        StopFillingBeerIfMoving(horizontal, vertical);
+        
+        AttemptMove<Wall>(horizontal, vertical);
+        animator.SetBool("isRunning", IsRunning);
+
+        CheckIfAtBarTap();
+
+        if (horizontal == 0 && vertical == 0)
+        {
+            FillBeerIfPourPressed(pourPressed);
+            HideCurrentTapIfFilling();
+        }
 
         FlipSpriteBasedOnHorizontalInput(horizontal);
+    }
 
-        AttemptMove<Wall>(horizontal, vertical);
+    private void ShowAllBarTaps()
+    {
+        foreach (BarTap tap in GameManager.instance.levelManager.GetBarTaps())
+        {
+            tap.GetComponent<SpriteRenderer>().enabled = true;   
+        }
+    }
 
-        animator.SetBool("isRunning", IsRunning);
+    private void HideCurrentTapIfFilling()
+    {
+        ShowAllBarTaps();
+
+        if (!IsFillingBeer && !IsIdleWithBeer)
+        {
+            return;
+        }
+
+        BarTap currentTap = GameManager.instance.levelManager.GetBarTapAtTapIndex(CurrentTapIndex);
+
+        if (currentTap.IsPlayerAtTap && !IsShifting)
+        {
+            currentTap.GetComponent<SpriteRenderer>().enabled = false;
+            
+            Vector3 theScale = transform.localScale;
+            theScale.x = currentTap.transform.localScale.x;
+            transform.localScale = theScale;
+        }
+    }
+
+    private void CheckIfAtBarTap()
+    {
+        RaycastHit2D hit;
+        BarTap touchingTap = null;
+
+        boxCollider.enabled = false;
+        hit = Physics2D.Linecast(transform.position, transform.position, itemsLayer);
+        boxCollider.enabled = true;
+
+        if (hit.transform != null && hit.transform.tag == "BarTap")
+        {
+            touchingTap = hit.transform.GetComponent<BarTap>();
+            touchingTap.IsPlayerAtTap = true;
+            IsAtCurrentBarTap = true;
+        }
+        else
+        {
+            IsAtCurrentBarTap = false;
+        }
+        
+        // mark other taps as the player not being there
+        List<BarTap> taps = GameManager.instance.levelManager.GetBarTaps();
+        foreach (BarTap otherTap in taps)
+        {
+            if (touchingTap != null && touchingTap.TapIndex != otherTap.TapIndex)
+            {
+                otherTap.IsPlayerAtTap = false;
+            }
+            else if (touchingTap == null)
+            {
+                otherTap.IsPlayerAtTap = false;
+            }
+        }
+    }
+
+    private void StopFillingBeerIfMoving(int horizontal, int vertical)
+    {
+        if ((horizontal != 0 || vertical != 0) && IsFillingBeer)
+        {
+            IsFillingBeer = false;
+            IsIdleWithBeer = false;
+            FillPercent = 0;
+            animator.SetBool("isFillingBeer", IsFillingBeer);
+            animator.SetBool("isIdleWithBeer", IsIdleWithBeer);
+        }
+    }
+
+    private void FillBeerIfPourPressed(bool pourPressed)
+    {
+        if (pourPressed && !IsFillingBeer && !IsIdleWithBeer)
+        {
+            // pouring and has not started filling beer -> start filling beer
+            BarTap currentTap = GameManager.instance.levelManager.GetBarTapAtTapIndex(CurrentTapIndex);
+            if (!currentTap.IsPlayerAtTap)
+            {
+                ShiftToNextBarTap(0); // 0 will cause to shift to current bar tap
+            }
+
+            IsFillingBeer = true;
+            StartCoroutine(FillBeer());
+        }
+        else if (pourPressed && IsFillingBeer && IsIdleWithBeer)
+        {
+            // pour pressed while being idle (paused filling) -> resume filling the beer
+            IsIdleWithBeer = false;
+            animator.SetBool("isIdleWithBeer", IsIdleWithBeer);
+            StartCoroutine(FillBeer());
+        }
+        else if (!pourPressed && IsFillingBeer && !IsIdleWithBeer)
+        {
+            // stopped pouring in the middle of filling beer -> user becomes idle
+            IsIdleWithBeer = true;
+            animator.SetBool("isIdleWithBeer", IsIdleWithBeer);
+        }
+    }
+
+    protected IEnumerator FillBeer()
+    {
+        animator.SetBool("isFillingBeer", IsFillingBeer);
+
+        while (IsFillingBeer && !IsIdleWithBeer && FillPercent <= 100)
+        {
+            FillPercent += 10;
+            yield return new WaitForSeconds(FillSpeed);
+        }
     }
 
     void FlipSpriteBasedOnHorizontalInput(int horizontalDir)
     {
-        bool doFlip = false;
+        if (horizontalDir == 0)
+        {
+            return;
+        }
 
         if (!IsFacingLeft && horizontalDir < 0)
         {
             IsFacingLeft = true;
-            doFlip = true;
         }
         else if (IsFacingLeft && horizontalDir > 0)
         {
             IsFacingLeft = false;
-            doFlip = true;
         }
 
-        if (doFlip)
+        int newX = 1;
+
+        if (IsFacingLeft)
         {
-            Vector3 theScale = transform.localScale;
-            theScale.x *= -1;
-            transform.localScale = theScale;
+            newX = -1;
         }
+
+        Vector3 theScale = transform.localScale;
+        theScale.x = newX;
+        transform.localScale = theScale;
     }
 
     
@@ -78,12 +228,12 @@ public class Player : MonoBehaviour
     {
         Vector2 start = transform.position;
         Vector2 end = start + new Vector2(xDir, yDir);
+        RaycastHit2D itemHit;
 
         boxCollider.enabled = false;
         hit = Physics2D.Linecast(start, end, blockingLayer);
+        itemHit = Physics2D.Linecast(start, end, itemsLayer);
         boxCollider.enabled = true;
-
-
 
         if (hit.transform == null)
         {
@@ -91,7 +241,7 @@ public class Player : MonoBehaviour
             {
                 ShiftToNextBarTap(yDir);
             } 
-            else if (xDir != 0)
+            else if (xDir != 0 && !IsFillingBeer)
             {
                 IsRunning = true;
                 Vector3 newPosition = Vector3.MoveTowards(rBody.position, end, RunSpeed * Time.deltaTime);
@@ -122,54 +272,38 @@ public class Player : MonoBehaviour
             nextTapIndex --;
         }
 
-        GameObject[] taps = GameObject.FindGameObjectsWithTag("BarTap");
 
-        BarTap foundTap = null;
-        bool isFound = false;
+        BarTap foundTap = GameManager.instance.levelManager.GetBarTapAtTapIndex(nextTapIndex);
+        BarTap firstTap = GameManager.instance.levelManager.GetFirstBarTap();
+        BarTap lastTap = GameManager.instance.levelManager.GetLastBarTap();
 
-        BarTap firstTap = null;
-        BarTap lastTap = null;
+        bool isFound = (foundTap != null);
 
-        for (int i = 0; i < taps.Length; i++)
-        {
-            foundTap = taps[i].GetComponent<BarTap>();
-
-            if (foundTap.tapIndex == 1)
-            {
-                firstTap = foundTap;
-            }
-
-            if (lastTap == null || foundTap.tapIndex > lastTap.tapIndex)
-            {
-                lastTap = foundTap;
-            }
-
-            if (foundTap.tapIndex == nextTapIndex)
-            {
-                isFound = true;
-                break;
-            }
-        }
-
-        if (!isFound && nextTapIndex < firstTap.tapIndex) 
+        // wrap to beginning or last tap if needed
+        if (!isFound && nextTapIndex < firstTap.TapIndex) 
         {
             isFound = true;
-            nextTapIndex = lastTap.tapIndex;
+            nextTapIndex = lastTap.TapIndex;
             foundTap = lastTap;
         } 
-        else if (!isFound && nextTapIndex > lastTap.tapIndex)
+        else if (!isFound && nextTapIndex > lastTap.TapIndex)
         {
             isFound = true;
-            nextTapIndex = firstTap.tapIndex;
+            nextTapIndex = firstTap.TapIndex;
             foundTap = firstTap;
         }
 
-        if (isFound)
+        if (isFound && !foundTap.IsPlayerAtTap)
         {
             CurrentTapIndex = nextTapIndex;
-            StartCoroutine(DoShift(foundTap.transform.position));
-        }
 
+            BoxCollider2D tapCollider = foundTap.GetComponent<BoxCollider2D>();
+            Vector3 newPos = foundTap.transform.position;
+            newPos.x += tapCollider.offset.x;
+            newPos.y += tapCollider.offset.y;
+
+            StartCoroutine(DoShift(newPos));
+        }
     }
 
     protected IEnumerator DoShift(Vector3 end)
@@ -191,8 +325,15 @@ public class Player : MonoBehaviour
 
     protected virtual void AttemptMove<T> (int xDir, int yDir) where T : Component
     {
-        if (xDir == 0 && yDir == 0)
+        if (IsShifting || (xDir == 0 && yDir == 0))
         {
+            // don't move if shifting or no input in X or Y direction
+            return;
+        }
+
+        if (xDir != 0 && IsFillingBeer)
+        {
+            // don't allow running when filling beer
             return;
         }
 

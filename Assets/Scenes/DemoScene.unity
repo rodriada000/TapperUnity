@@ -127,12 +127,12 @@ PrefabInstance:
     - target: {fileID: 8703099678576936185, guid: 98fa3f6a5e0e0864fb881a67791b53e0,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.6
+      value: -0.53
       objectReference: {fileID: 0}
     - target: {fileID: 8703099678576936185, guid: 98fa3f6a5e0e0864fb881a67791b53e0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.23
       objectReference: {fileID: 0}
     - target: {fileID: 8703099678576936185, guid: 98fa3f6a5e0e0864fb881a67791b53e0,
         type: 3}
@@ -431,12 +431,12 @@ PrefabInstance:
     - target: {fileID: 5581709297106271937, guid: 97eb73db6aac46041b69cd8b8bec1a51,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.52
+      value: -5.4
       objectReference: {fileID: 0}
     - target: {fileID: 5581709297106271937, guid: 97eb73db6aac46041b69cd8b8bec1a51,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.76
       objectReference: {fileID: 0}
     - target: {fileID: 5581709297106271937, guid: 97eb73db6aac46041b69cd8b8bec1a51,
         type: 3}
@@ -505,7 +505,7 @@ PrefabInstance:
     - target: {fileID: 5310765891759728102, guid: 853b7d36c05feae48b431bad06675ac4,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2
+      value: -2.25
       objectReference: {fileID: 0}
     - target: {fileID: 5310765891759728102, guid: 853b7d36c05feae48b431bad06675ac4,
         type: 3}
@@ -557,6 +557,11 @@ PrefabInstance:
       propertyPath: tapIndex
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 5310765891759728103, guid: 853b7d36c05feae48b431bad06675ac4,
+        type: 3}
+      propertyPath: TapIndex
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 853b7d36c05feae48b431bad06675ac4, type: 3}
 --- !u!1001 &595337830
@@ -579,7 +584,7 @@ PrefabInstance:
     - target: {fileID: 5310765891759728102, guid: 853b7d36c05feae48b431bad06675ac4,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 5310765891759728102, guid: 853b7d36c05feae48b431bad06675ac4,
         type: 3}
@@ -631,6 +636,11 @@ PrefabInstance:
       propertyPath: tapIndex
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 5310765891759728103, guid: 853b7d36c05feae48b431bad06675ac4,
+        type: 3}
+      propertyPath: TapIndex
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 853b7d36c05feae48b431bad06675ac4, type: 3}
 --- !u!1001 &760709770
@@ -645,6 +655,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BarTap1
       objectReference: {fileID: 0}
+    - target: {fileID: 5310765891759728120, guid: 853b7d36c05feae48b431bad06675ac4,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5310765891759728102, guid: 853b7d36c05feae48b431bad06675ac4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -653,7 +668,7 @@ PrefabInstance:
     - target: {fileID: 5310765891759728102, guid: 853b7d36c05feae48b431bad06675ac4,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5310765891759728102, guid: 853b7d36c05feae48b431bad06675ac4,
         type: 3}
@@ -703,6 +718,11 @@ PrefabInstance:
     - target: {fileID: 5310765891759728103, guid: 853b7d36c05feae48b431bad06675ac4,
         type: 3}
       propertyPath: tapIndex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5310765891759728103, guid: 853b7d36c05feae48b431bad06675ac4,
+        type: 3}
+      propertyPath: TapIndex
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -800,6 +820,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0978a7ec167ffc2419653a977d450584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blockingLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  itemsLayer:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!1001 &1530585082
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -958,7 +984,7 @@ PrefabInstance:
     - target: {fileID: 5310765891759728102, guid: 853b7d36c05feae48b431bad06675ac4,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5310765891759728102, guid: 853b7d36c05feae48b431bad06675ac4,
         type: 3}
@@ -1010,6 +1036,16 @@ PrefabInstance:
       propertyPath: tapIndex
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5310765891759728103, guid: 853b7d36c05feae48b431bad06675ac4,
+        type: 3}
+      propertyPath: IsPlayerAtTap
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5310765891759728103, guid: 853b7d36c05feae48b431bad06675ac4,
+        type: 3}
+      propertyPath: TapIndex
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 853b7d36c05feae48b431bad06675ac4, type: 3}
 --- !u!1001 &7444981418988045272
@@ -1027,12 +1063,12 @@ PrefabInstance:
     - target: {fileID: 7444981419164391270, guid: a49a63ef20c0f454e9135ad6a6f38280,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.32
       objectReference: {fileID: 0}
     - target: {fileID: 7444981419164391270, guid: a49a63ef20c0f454e9135ad6a6f38280,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.3
       objectReference: {fileID: 0}
     - target: {fileID: 7444981419164391270, guid: a49a63ef20c0f454e9135ad6a6f38280,
         type: 3}
@@ -1088,6 +1124,16 @@ PrefabInstance:
         type: 3}
       propertyPath: ShiftTime
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7444981419164391266, guid: a49a63ef20c0f454e9135ad6a6f38280,
+        type: 3}
+      propertyPath: blockingLayer.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 7444981419164391266, guid: a49a63ef20c0f454e9135ad6a6f38280,
+        type: 3}
+      propertyPath: itemsLayer.m_Bits
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a49a63ef20c0f454e9135ad6a6f38280, type: 3}

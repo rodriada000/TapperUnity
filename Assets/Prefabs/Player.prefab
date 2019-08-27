@@ -163,10 +163,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blockingLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
+  itemsLayer:
+    serializedVersion: 2
+    m_Bits: 1
   restartLevelDelay: 1
-  moveTime: 0.1
-  walkSpeed: 4
-  canMove: 0
-  isRunning: 0
-  isShifting: 0
+  ShiftDelay: 0.4
+  ShiftSpeed: 50
+  RunSpeed: 2.75
+  IsRunning: 0
+  IsFacingLeft: 0
+  IsShifting: 0
+  CurrentTapIndex: 0
+  IsAtCurrentBarTap: 0
+  FillSpeed: 0.05
+  FillPercent: 0
+  IsFillingBeer: 0
+  IsIdleWithBeer: 0

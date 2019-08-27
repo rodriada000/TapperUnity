@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class BarTap : MonoBehaviour
 {
-    public int tapIndex;
+    public int TapIndex;
 
-    public bool isPlayerAtTap;
+    public bool IsPlayerAtTap;
 
     // Start is called before the first frame update
     void Start()
     {
-        isPlayerAtTap = false;
+        IsPlayerAtTap = false;
     }
 
     // Update is called once per frame

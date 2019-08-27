@@ -25,6 +25,23 @@ TextureImporter:
     21300040: Tapper_SpriteSheet_EmptyMug_1
     21300042: Tapper_SpriteSheet_Throw_0
     21300044: Tapper_SpriteSheet_FillMug_0
+    21300046: Tapper_SpriteSheet_0
+    21300048: Tapper_SpriteSheet_Lever_0
+    21300050: Tapper_SpriteSheet_FillMug_1
+    21300052: Tapper_SpriteSheet_FillMug_2
+    21300054: Tapper_SpriteSheet_FillMug_3
+    21300056: Tapper_SpriteSheet_FillMug_5
+    21300058: Tapper_SpriteSheet_FillMug_6
+    21300060: Tapper_SpriteSheet_FillMug_7
+    21300062: Tapper_SpriteSheet_FillMug_8
+    21300064: Tapper_SpriteSheet_IdleLever_0
+    21300066: Tapper_SpriteSheet_IdleLever_1
+    21300068: Tapper_SpriteSheet_IdleLever_2
+    21300070: Tapper_SpriteSheet_IdleLever_3
+    21300072: Tapper_SpriteSheet_IdleLever_4
+    21300074: Tapper_SpriteSheet_IdleLever_5
+    21300076: Tapper_SpriteSheet_IdleLever_6
+    21300078: Tapper_SpriteSheet_IdleLever_7
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -566,13 +583,353 @@ TextureImporter:
         width: 64
         height: 96
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
       spriteID: f7bfab4984cf1e6479b2fd36d2decaf1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tapper_SpriteSheet_0
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 1122
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 029a7081c6024f44b95a0bc41e9f1280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tapper_SpriteSheet_Lever_0
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 1092
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34beb98c797219645b4237db48a46e0c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tapper_SpriteSheet_FillMug_1
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 960
+        width: 64
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed3bc3c0101d64241b7a0ae1d628e769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tapper_SpriteSheet_FillMug_2
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 960
+        width: 64
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b2e42bfd6ee16a43a6b90b392c54739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tapper_SpriteSheet_FillMug_3
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 960
+        width: 64
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 363aa67bf79aad54794c89e81bc18c24
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tapper_SpriteSheet_FillMug_5
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 960
+        width: 64
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b49e32c5837b9f49a6da533223c47ae
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tapper_SpriteSheet_FillMug_6
+      rect:
+        serializedVersion: 2
+        x: 330
+        y: 960
+        width: 64
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21687c12329172e4599060b7d2ec7876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tapper_SpriteSheet_FillMug_7
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 960
+        width: 64
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebd7b86b09708d644bfb749032e1e028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tapper_SpriteSheet_FillMug_8
+      rect:
+        serializedVersion: 2
+        x: 462
+        y: 960
+        width: 64
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92d1a32e1e8f6234baa65d93eed0da8b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tapper_SpriteSheet_IdleLever_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 862
+        width: 64
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e01b14cb339070741a4851aa9d681eb2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tapper_SpriteSheet_IdleLever_1
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 862
+        width: 64
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99211f324502f89469bdee34f588fd54
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tapper_SpriteSheet_IdleLever_2
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 862
+        width: 64
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 523e79b7897659e449f039056549cc5a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tapper_SpriteSheet_IdleLever_3
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 862
+        width: 64
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8749f207a280a174eb71905002cf53fc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tapper_SpriteSheet_IdleLever_4
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 862
+        width: 64
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c5c6118643367340b6b605677ebcbad
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tapper_SpriteSheet_IdleLever_5
+      rect:
+        serializedVersion: 2
+        x: 330
+        y: 862
+        width: 64
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f23334ebb0502342ac9c1fb61958efd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tapper_SpriteSheet_IdleLever_6
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 862
+        width: 64
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d39ad6f14f724a44badde46d3c999c5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tapper_SpriteSheet_IdleLever_7
+      rect:
+        serializedVersion: 2
+        x: 462
+        y: 862
+        width: 64
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4557bd68e22fc134b9e06b586a29b6ef
       vertices: []
       indices: 
       edges: []
