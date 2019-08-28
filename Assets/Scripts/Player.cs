@@ -337,6 +337,12 @@ public class Player : MonoBehaviour
             return;
         }
 
+        if (xDir > 0 && IsAtCurrentBarTap)
+        {
+            // stop movement to the right if at BarTap
+            return;
+        }
+
         if (xDir != 0)
         {
             yDir = 0;
