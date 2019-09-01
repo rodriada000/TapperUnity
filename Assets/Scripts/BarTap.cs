@@ -8,9 +8,14 @@ public class BarTap : MonoBehaviour
 
     public bool IsPlayerAtTap;
 
+    public bool IsFlipped;
+
     // Start is called before the first frame update
     void Start()
     {
+        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+
+        IsFlipped = renderer.flipX;
         IsPlayerAtTap = false;
     }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,6 +27,7 @@ public class Player : MonoBehaviour
 
     private Rigidbody2D rBody;
     private BoxCollider2D boxCollider;
+    private SpriteRenderer renderer;
     private Animator animator;
     private int levelScore;
 
@@ -41,6 +43,7 @@ public class Player : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>();
         rBody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();    
+        renderer = GetComponent<SpriteRenderer>();
 
         IsRunning = false;
         IsShifting = false;
@@ -161,6 +164,8 @@ public class Player : MonoBehaviour
             {
                 ShiftToNextBarTap(0); // 0 will cause to shift to current bar tap
             }
+            
+            HorizontalFlipSpriteBasedOnBool(currentTap.IsFlipped);
 
             IsFillingBeer = true;
             StartCoroutine(FillBeer());
@@ -207,18 +212,13 @@ public class Player : MonoBehaviour
             IsFacingLeft = false;
         }
 
-        int newX = 1;
-
-        if (IsFacingLeft)
-        {
-            newX = -1;
-        }
-
-        Vector3 theScale = transform.localScale;
-        theScale.x = newX;
-        transform.localScale = theScale;
+        HorizontalFlipSpriteBasedOnBool(IsFacingLeft);
     }
 
+    private void HorizontalFlipSpriteBasedOnBool(bool condition)
+    {
+        renderer.flipX = condition;
+    }
     
     protected bool Move (int xDir, int yDir, out RaycastHit2D hit)
     {
