@@ -18,8 +18,16 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        ShowAllBarTaps();
         // CheckIfPlayerIsAtTap();
+    }
+
+    private void ShowAllBarTaps()
+    {
+        foreach (BarTap tap in GetBarTaps())
+        {
+            tap.GetComponent<SpriteRenderer>().enabled = true;   
+        }
     }
 
     private void CheckIfPlayerIsAtTap()
