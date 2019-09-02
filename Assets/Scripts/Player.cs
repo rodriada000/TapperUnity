@@ -19,15 +19,23 @@ public class Player : MonoBehaviour
     public int CurrentTapIndex;
     public bool IsAtCurrentBarTap;
     
-    public float FillSpeed = 0.05f;
+    public float FillSpeed = 0.1f;
     public int FillPercent = 0;
+
+    public float FillOffset
+    {
+        get
+        {
+            return (float) FillPercent / 100;
+        }
+    }
     public bool IsFillingBeer;
     public bool IsIdleWithBeer;
 
 
     private Rigidbody2D rBody;
     private BoxCollider2D boxCollider;
-    private SpriteRenderer renderer;
+    private SpriteRenderer spriteRenderer;
     private Animator animator;
     private int levelScore;
 
@@ -43,7 +51,7 @@ public class Player : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>();
         rBody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();    
-        renderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         IsRunning = false;
         IsShifting = false;
@@ -56,6 +64,9 @@ public class Player : MonoBehaviour
 
         IsFillingBeer = false;
         animator.SetBool("isFillingBeer", IsFillingBeer);
+
+        BarTap currentTap = GameManager.instance.levelManager.GetBarTapAtTapIndex(CurrentTapIndex);
+        rBody.transform.position = currentTap.GetShiftPositionVector();
     }
 
     // Update is called once per frame
@@ -81,7 +92,9 @@ public class Player : MonoBehaviour
 
     void LateUpdate()
     {
-        if (horizontalInput == 0 && verticalInput == 0)
+        animator.SetFloat("fillOffset", FillOffset);
+
+        if (horizontalInput == 0 && verticalInput == 0 && !IsShifting)
         {
             FillBeerIfPourPressed(pourPressed);
             HideCurrentTapIfFilling();
@@ -189,11 +202,18 @@ public class Player : MonoBehaviour
     {
         animator.SetBool("isFillingBeer", IsFillingBeer);
 
-        while (IsFillingBeer && !IsIdleWithBeer && FillPercent <= 100)
+        while (IsFillingBeer && !IsIdleWithBeer && FillPercent <= 100 && !IsShifting)
         {
             FillPercent += 10;
             yield return new WaitForSeconds(FillSpeed);
         }
+
+        if (FillPercent > 100)
+        {
+            FillPercent = 100;
+        }
+
+        animator.SetBool("isFillingBeer", IsFillingBeer);
     }
 
     void FlipSpriteBasedOnHorizontalInput(int horizontalDir)
@@ -217,7 +237,7 @@ public class Player : MonoBehaviour
 
     private void HorizontalFlipSpriteBasedOnBool(bool condition)
     {
-        renderer.flipX = condition;
+        spriteRenderer.flipX = condition;
     }
     
     protected bool Move (int xDir, int yDir, out RaycastHit2D hit)
@@ -297,9 +317,7 @@ public class Player : MonoBehaviour
             CurrentTapIndex = nextTapIndex;
 
             BoxCollider2D tapCollider = foundTap.GetComponent<BoxCollider2D>();
-            Vector3 newPos = foundTap.transform.position;
-            newPos.x += tapCollider.offset.x * foundTap.transform.localScale.x;
-            newPos.y += tapCollider.offset.y;
+            Vector3 newPos = foundTap.GetShiftPositionVector();
 
             StartCoroutine(DoShift(newPos));
         }

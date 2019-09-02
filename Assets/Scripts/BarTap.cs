@@ -24,4 +24,14 @@ public class BarTap : MonoBehaviour
     {
         
     }
+
+    public Vector3 GetShiftPositionVector()
+    {
+        BoxCollider2D tapCollider = GetComponent<BoxCollider2D>();
+        Vector3 positionWithOffset = this.transform.position;
+        positionWithOffset.x += tapCollider.offset.x;
+        positionWithOffset.y += tapCollider.offset.y;
+
+        return positionWithOffset;
+    }
 }
