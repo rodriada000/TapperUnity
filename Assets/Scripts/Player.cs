@@ -9,8 +9,8 @@ public class Player : MonoBehaviour
     public LayerMask blockingLayer;
     public LayerMask itemsLayer;    
 
-    public float restartLevelDelay = 1f;
-    public float ShiftDelay = 0.5f;
+    public float restartLevelDelay = 1.5f;
+    public float ShiftDelay = 0.4f;
     public float ShiftSpeed = 50f;
     public float RunSpeed = 4f;
     public bool IsRunning;
@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     public int CurrentTapIndex;
     public bool IsAtCurrentBarTap;
     
-    public float FillSpeed = 0.1f;
+    public float FillSpeed = 0.05f;
     public int FillPercent = 0;
 
     public float FillOffset
@@ -173,15 +173,17 @@ public class Player : MonoBehaviour
         {
             // pouring and has not started filling beer -> start filling beer
             BarTap currentTap = GameManager.instance.levelManager.GetBarTapAtTapIndex(CurrentTapIndex);
-            if (!currentTap.IsPlayerAtTap)
+            if (!IsAtCurrentBarTap)
             {
-                ShiftToNextBarTap(0); // 0 will cause to shift to current bar tap
+                StartCoroutine(ShiftToBarTapAndFillBeer());
+            }
+            else
+            {
+                IsFillingBeer = true;
+                StartCoroutine(FillBeer());
             }
             
             HorizontalFlipSpriteBasedOnBool(currentTap.IsFlipped);
-
-            IsFillingBeer = true;
-            StartCoroutine(FillBeer());
         }
         else if (pourPressed && IsFillingBeer && IsIdleWithBeer)
         {
@@ -196,6 +198,20 @@ public class Player : MonoBehaviour
             IsIdleWithBeer = true;
             animator.SetBool("isIdleWithBeer", IsIdleWithBeer);
         }
+    }
+
+    protected IEnumerator ShiftToBarTapAndFillBeer()
+    {
+        ShiftToNextBarTap(0); // 0 will cause to shift to current bar tap
+
+        // wait until done shifting before filling beer
+        while (IsShifting)
+        {
+            yield return null;
+        }        
+
+        IsFillingBeer = true;
+        StartCoroutine(FillBeer());
     }
 
     protected IEnumerator FillBeer()

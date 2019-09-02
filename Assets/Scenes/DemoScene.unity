@@ -1908,5 +1908,15 @@ PrefabInstance:
       propertyPath: itemsLayer.m_Bits
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7444981419164391266, guid: a49a63ef20c0f454e9135ad6a6f38280,
+        type: 3}
+      propertyPath: FillSpeed
+      value: 0.075
+      objectReference: {fileID: 0}
+    - target: {fileID: 7444981419164391267, guid: a49a63ef20c0f454e9135ad6a6f38280,
+        type: 3}
+      propertyPath: m_UsedByComposite
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a49a63ef20c0f454e9135ad6a6f38280, type: 3}
