@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 8764987742670564179}
   - component: {fileID: 8764987742670564188}
   - component: {fileID: 8764987742670564189}
-  m_Layer: 0
-  m_Name: BarExit 1
+  m_Layer: 8
+  m_Name: BarExitAndBars
   m_TagString: Exit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96,7 +96,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.9}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}

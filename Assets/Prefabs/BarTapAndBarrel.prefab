@@ -95,6 +95,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TapIndex: 2
   IsPlayerAtTap: 0
+  IsFlipped: 0
 --- !u!61 &4912957496026466256
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -132,7 +133,7 @@ GameObject:
   - component: {fileID: 4912957497058307167}
   - component: {fileID: 4912957497058307164}
   m_Layer: 0
-  m_Name: BarTapAndBarrel (3)
+  m_Name: BarTapAndBarrel
   m_TagString: Bar
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

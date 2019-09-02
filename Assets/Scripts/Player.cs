@@ -354,6 +354,21 @@ public class Player : MonoBehaviour
             return;
         }
 
+        if (IsAtCurrentBarTap && xDir != 0)
+        {
+            // don't allow player to move pass bar tap
+            BarTap currentTap = GameManager.instance.levelManager.GetBarTapAtTapIndex(CurrentTapIndex);
+            if (xDir > 0 && !currentTap.IsFlipped)
+            {
+                return;
+            }
+
+            if (xDir < 0 && currentTap.IsFlipped)
+            {
+                return;
+            }
+        }
+
         if (xDir != 0)
         {
             yDir = 0;
