@@ -9,6 +9,8 @@ public class LevelManager : MonoBehaviour
 
     public LayerMask itemsLayer;  
 
+    public float PlayerBeerSpeed;
+
     // Start is called before the first frame update
     void Start()
     {

@@ -6,20 +6,24 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 
+    public GameObject BeerPrefab;
+
     public LayerMask blockingLayer;
     public LayerMask itemsLayer;    
 
     public float restartLevelDelay = 1.5f;
-    public float ShiftDelay = 0.4f;
+    public float ShiftDelay = 0.5f;
     public float ShiftSpeed = 50f;
     public float RunSpeed = 4f;
     public bool IsRunning;
     public bool IsFacingLeft;
     public bool IsShifting;
+    public bool IsServing;
+    public float ServeDelay = 0.2f;
     public int CurrentTapIndex;
     public bool IsAtCurrentBarTap;
     
-    public float FillSpeed = 0.05f;
+    public float FillSpeed = 0.075f;
     public int FillPercent = 0;
 
     public float FillOffset
@@ -78,7 +82,7 @@ public class Player : MonoBehaviour
         verticalInput = (int)Input.GetAxisRaw("Vertical");
 
         pourPressed = Input.GetButton("Pour");
-        servePressed = Input.GetButton("Serve");
+        servePressed = Input.GetButtonDown("Serve");
 
         StopFillingBeerIfMoving(horizontalInput, verticalInput);
         
@@ -98,7 +102,57 @@ public class Player : MonoBehaviour
         {
             FillBeerIfPourPressed(pourPressed);
             HideCurrentTapIfFilling();
+
+            // require the user to stop pouring before they can serve (prevents them from just holding the buttons down)
+            if (!pourPressed)
+            {
+                StartCoroutine(ServeBeerIfReady());
+            }
         }
+    }
+
+    protected IEnumerator ServeBeerIfReady()
+    {
+        if (!servePressed || FillPercent < 100 || IsShifting)
+        {
+            yield break;
+        }
+
+        IsServing = true;
+        FillPercent = 0;
+        IsFillingBeer = false;
+        IsIdleWithBeer = false;
+
+        animator.SetTrigger("playerServe");
+        animator.SetBool("isServing", IsServing);
+        animator.SetBool("isFillingBeer", IsFillingBeer);
+        animator.SetBool("isIdleWithBeer", IsIdleWithBeer);
+        animator.SetFloat("fillOffset", FillOffset);
+
+
+        int beerDir = -1;
+
+        BarTap currentTap = GameManager.instance.levelManager.GetBarTapAtTapIndex(CurrentTapIndex);
+
+        if (currentTap.IsFlipped)
+        {
+            beerDir = 1;
+        }
+
+        float beerOffsetX = 1.6f;
+        float beerOffsetY = 0.6f;
+
+
+        GameObject beerObj = Instantiate(BeerPrefab, transform.position + new Vector3(beerOffsetX * beerDir, beerOffsetY, 0), transform.rotation);
+        Beer beer = beerObj.GetComponent<Beer>();
+        beer.HorionztalDir = beerDir;
+        beer.IsFilled = true;
+        beer.Speed = GameManager.instance.levelManager.PlayerBeerSpeed;
+
+        yield return new WaitForSeconds(ServeDelay);
+
+        IsServing = false;
+        animator.SetBool("isServing", IsServing);
     }
 
     private void HideCurrentTapIfFilling()
@@ -169,7 +223,7 @@ public class Player : MonoBehaviour
 
     private void FillBeerIfPourPressed(bool pourPressed)
     {
-        if (pourPressed && !IsFillingBeer && !IsIdleWithBeer)
+        if (pourPressed && !IsFillingBeer && !IsIdleWithBeer && !IsServing)
         {
             // pouring and has not started filling beer -> start filling beer
             BarTap currentTap = GameManager.instance.levelManager.GetBarTapAtTapIndex(CurrentTapIndex);
@@ -185,14 +239,14 @@ public class Player : MonoBehaviour
             
             HorizontalFlipSpriteBasedOnBool(currentTap.IsFlipped);
         }
-        else if (pourPressed && IsFillingBeer && IsIdleWithBeer)
+        else if (pourPressed && IsFillingBeer && IsIdleWithBeer && !IsServing)
         {
             // pour pressed while being idle (paused filling) -> resume filling the beer
             IsIdleWithBeer = false;
             animator.SetBool("isIdleWithBeer", IsIdleWithBeer);
             StartCoroutine(FillBeer());
         }
-        else if (!pourPressed && IsFillingBeer && !IsIdleWithBeer)
+        else if (!pourPressed && IsFillingBeer && !IsIdleWithBeer && !IsServing)
         {
             // stopped pouring in the middle of filling beer -> user becomes idle
             IsIdleWithBeer = true;

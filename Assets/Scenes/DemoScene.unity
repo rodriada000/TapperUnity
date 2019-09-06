@@ -749,7 +749,7 @@ PrefabInstance:
     - target: {fileID: 8764987742670564179, guid: 2e4ae9ac809b0864780ca452e8a47b71,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.45
+      value: 4.2
       objectReference: {fileID: 0}
     - target: {fileID: 8764987742670564179, guid: 2e4ae9ac809b0864780ca452e8a47b71,
         type: 3}
@@ -1077,7 +1077,7 @@ PrefabInstance:
     - target: {fileID: 8764987742670564179, guid: 2e4ae9ac809b0864780ca452e8a47b71,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.52
+      value: -4.95
       objectReference: {fileID: 0}
     - target: {fileID: 8764987742670564179, guid: 2e4ae9ac809b0864780ca452e8a47b71,
         type: 3}
@@ -1150,6 +1150,7 @@ MonoBehaviour:
   itemsLayer:
     serializedVersion: 2
     m_Bits: 1
+  PlayerBeerSpeed: 4
 --- !u!1001 &1328402393
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1217,6 +1218,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4912957496026466259, guid: 1f270d86085ecc540bdb433c99686316,
+        type: 3}
+      propertyPath: TapIndex
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4912957497058307164, guid: 1f270d86085ecc540bdb433c99686316,
         type: 3}
       propertyPath: m_FlipX
@@ -1231,11 +1237,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_FlipX
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4912957496026466259, guid: 1f270d86085ecc540bdb433c99686316,
-        type: 3}
-      propertyPath: TapIndex
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4912957496026466256, guid: 1f270d86085ecc540bdb433c99686316,
         type: 3}
@@ -1311,6 +1312,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4912957496026466259, guid: 1f270d86085ecc540bdb433c99686316,
+        type: 3}
+      propertyPath: TapIndex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4912957497058307164, guid: 1f270d86085ecc540bdb433c99686316,
         type: 3}
       propertyPath: m_FlipX
@@ -1324,11 +1330,6 @@ PrefabInstance:
     - target: {fileID: 4912957496026466258, guid: 1f270d86085ecc540bdb433c99686316,
         type: 3}
       propertyPath: m_FlipX
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4912957496026466259, guid: 1f270d86085ecc540bdb433c99686316,
-        type: 3}
-      propertyPath: TapIndex
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4912957496026466256, guid: 1f270d86085ecc540bdb433c99686316,
@@ -1912,6 +1913,16 @@ PrefabInstance:
         type: 3}
       propertyPath: FillSpeed
       value: 0.075
+      objectReference: {fileID: 0}
+    - target: {fileID: 7444981419164391266, guid: a49a63ef20c0f454e9135ad6a6f38280,
+        type: 3}
+      propertyPath: ServeDelay
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7444981419164391266, guid: a49a63ef20c0f454e9135ad6a6f38280,
+        type: 3}
+      propertyPath: ShiftDelay
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7444981419164391267, guid: a49a63ef20c0f454e9135ad6a6f38280,
         type: 3}
