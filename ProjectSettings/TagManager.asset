@@ -10,6 +10,7 @@ TagManager:
   - Beer
   - Bar
   - BarTap
+  - Customer
   layers:
   - Default
   - TransparentFX
@@ -20,8 +21,8 @@ TagManager:
   - 
   - 
   - Solids
-  - 
-  - 
+  - Beer
+  - Customers
   - 
   - 
   - 
