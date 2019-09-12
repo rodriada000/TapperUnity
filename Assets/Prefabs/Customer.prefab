@@ -161,15 +161,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9256182799a40b4592bf92754a568b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TapIndex: 0
   HorionztalDir: 1
   MoveSpeed: 2
   SlideSpeed: 8
-  SlideTime: 0.75
+  SlideDistance: 6
+  IsSliding: 0
   IsDistracted: 0
   IsDrinking: 0
-  BeerLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  defaultMask:
-    serializedVersion: 2
-    m_Bits: 1
+  DrinkTime: 1
+  RandomMoveTime: 0
+  IsStopped: 0
+  MinMoveTime: 1.5
+  MaxMoveTime: 3
+  MinStopTime: 0.5
+  MaxStopTime: 2.5

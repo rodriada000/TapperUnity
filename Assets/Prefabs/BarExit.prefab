@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5581709297106271937}
   - component: {fileID: 5581709297106271950}
   - component: {fileID: 5581709297106271951}
+  - component: {fileID: 1808011487606133968}
   m_Layer: 0
   m_Name: BarExit
   m_TagString: Exit
@@ -106,3 +107,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1808011487606133968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5581709297106271948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ab54e41cea9bac4f8e4064cfcebb1cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TapIndex: 0
+  IsFlipped: 0
+  CustomerLimit: 3
+  SpawnCoolDownTime: 3
+  CustomerPrefab: {fileID: 1018221837947807538, guid: 308d9bd8a57eae1428b551a764a7befa,
+    type: 3}
