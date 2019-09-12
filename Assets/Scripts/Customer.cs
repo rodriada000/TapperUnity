@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class Customer : MonoBehaviour
 {
-
     public int HorionztalDir = 1;
 
     public float MoveSpeed = 2.0f;
 
     public float SlideSpeed = 8.0f;
 
-    public float SlideTime = 1.0f;
+    public float SlideDistance = 4f;
 
+    public bool IsSliding;
     public bool IsDistracted;
 
     public bool IsDrinking;
+
+    public float DrinkTime = 1.0f;
 
     public LayerMask BeerLayer;
     public LayerMask defaultMask;
@@ -32,6 +34,7 @@ public class Customer : MonoBehaviour
     {
         IsDistracted = false;
         IsDrinking = false;
+        IsSliding = false;
 
         boxCollider = GetComponent<BoxCollider2D>();
         rBody = GetComponent<Rigidbody2D>();
@@ -43,12 +46,11 @@ public class Customer : MonoBehaviour
     void Update()
     {
         MoveForward();
-        StartSlidingIfDrinking();
     }
 
     void MoveForward()
     {
-        if (IsDrinking)
+        if (IsDrinking || IsSliding || IsDistracted)
         {
             return;
         }
@@ -60,9 +62,9 @@ public class Customer : MonoBehaviour
         rBody.MovePosition(newPos);
     }
 
-    void StartSlidingIfDrinking()
+    void StartSliding()
     {
-        if (!IsDrinking)
+        if (!IsDrinking && !IsSliding)
         {
             return;
         }
@@ -72,30 +74,53 @@ public class Customer : MonoBehaviour
 
     protected IEnumerator SlideBack()
     {
-        float startTime = 0.0f;
+        IsSliding = true;
 
-        while (startTime < SlideTime)
+        Vector2 startPosition = transform.position;
+        Vector2 finalPosition = startPosition + new Vector2(HorionztalDir * -1 * SlideDistance, 0);
+
+
+        float distanceThreshold = 0.15f;
+
+        while (Vector2.Distance(transform.position, finalPosition) > distanceThreshold)
         {
-            Vector2 start = transform.position;
-            Vector2 end = start + new Vector2(HorionztalDir * -1, 0);
+            Vector2 currentPos = transform.position;
+            Vector2 end = currentPos + new Vector2(HorionztalDir * -1, 0);
 
-            Vector3 newPos = Vector3.MoveTowards(rBody.position, end, SlideSpeed * Time.deltaTime);
-            rBody.MovePosition(newPos);
+            Vector2 nextPosition = Vector3.MoveTowards(rBody.position, end, SlideSpeed * Time.deltaTime);
+            rBody.MovePosition(nextPosition);
 
-            startTime += Time.deltaTime;
             yield return null;
         }
 
-        IsDrinking = false;
+        IsSliding = false;
+    }
+
+    protected IEnumerator DrinkBeer(GameObject beer)
+    {
+            Destroy(beer);
+
+            IsDrinking = true;
+            animator.SetBool("isDrinking", IsDrinking);
+
+            yield return new WaitForSeconds(DrinkTime);
+
+            IsDrinking = false;
+            animator.SetBool("isDrinking", IsDrinking);
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.CompareTag("Beer") && !IsDrinking)
+        if (collider.gameObject.CompareTag("Beer") && !IsDrinking && !IsDistracted)
         {
-            IsDrinking = true;
-            Destroy(collider.gameObject);
-            animator.SetBool("isDrinking", IsDrinking);
+            StartCoroutine(DrinkBeer(collider.gameObject));
+            StartSliding();
+        }
+
+        if (collider.gameObject.CompareTag("Exit") && (IsDrinking || IsSliding))
+        {
+            Destroy(this.gameObject);
+            // TODO: get points for getting rid of customer
         }
     }
 }

@@ -1820,6 +1820,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1018221837947807503, guid: 308d9bd8a57eae1428b551a764a7befa,
+        type: 3}
+      propertyPath: SlideSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1018221837947807503, guid: 308d9bd8a57eae1428b551a764a7befa,
+        type: 3}
+      propertyPath: SlideDistance
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1018221837947807503, guid: 308d9bd8a57eae1428b551a764a7befa,
+        type: 3}
+      propertyPath: BeerLayer.m_Bits
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 1018221837947807503, guid: 308d9bd8a57eae1428b551a764a7befa,
+        type: 3}
+      propertyPath: defaultMask.m_Bits
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 308d9bd8a57eae1428b551a764a7befa, type: 3}
 --- !u!1001 &4912957496787410085
