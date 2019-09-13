@@ -63,7 +63,7 @@ public class BarExit : MonoBehaviour
     {
         int customerDir = IsFlipped ? -1 : 1;
 
-        float customerOffsetX = Random.RandomRange(MinOffsetX, MaxOffsetX);
+        float customerOffsetX = Random.Range(MinOffsetX, MaxOffsetX);
         float customerOffsetY = 0.75f;
 
         GameObject customerObj = Instantiate(CustomerPrefab, transform.position + new Vector3(customerDir * customerOffsetX, customerOffsetY, 0), transform.rotation);

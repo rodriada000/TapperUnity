@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Customer : MonoBehaviour
 {
+    public GameObject BeerPrefab;
     public int TapIndex;
 
     public int HorionztalDir = 1;
@@ -20,6 +21,14 @@ public class Customer : MonoBehaviour
     public bool IsDrinking;
 
     public float DrinkTime = 1.0f;
+
+    public bool CanDrink
+    {
+        get
+        {
+            return !IsSliding && !IsDrinking && !IsDistracted;
+        }
+    }
 
     private BoxCollider2D boxCollider;
     private Rigidbody2D rBody;
@@ -153,20 +162,51 @@ public class Customer : MonoBehaviour
 
             IsDrinking = false;
             animator.SetBool("isDrinking", IsDrinking);
+
+            StartCoroutine(SpawnEmptyBeerMug());
+    }
+
+    protected IEnumerator SpawnEmptyBeerMug()
+    {
+        // wait until customer is finished sliding or drinking before spawning beer
+        while (IsSliding)
+        {
+            yield return null;
+        }
+
+        float beerOffsetX = 0.25f;
+        float beerOffsetY = -0.25f;
+
+        GameObject beerObj = Instantiate(BeerPrefab, transform.position + new Vector3(beerOffsetX * HorionztalDir, beerOffsetY, 0), transform.rotation);
+        Beer beer = beerObj.GetComponent<Beer>();
+        beer.HorionztalDir = HorionztalDir;
+        beer.IsFilled = false;
+        beer.Speed = GameManager.instance.levelManager.PlayerBeerSpeed * 0.5f;
+        beer.TapIndex = this.TapIndex;
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.CompareTag("Beer") && !IsDrinking && !IsDistracted)
+        
+        if (collider.gameObject.CompareTag("Beer") && CanDrink)
         {
-            StartCoroutine(DrinkBeer(collider.gameObject));
-            StartSliding();
+            Beer beer = collider.GetComponent<Beer>();
+            if (beer.IsFilled) 
+            {
+                StartCoroutine(DrinkBeer(collider.gameObject));
+                StartSliding();
+            }
         }
 
         if (collider.gameObject.CompareTag("Exit") && (IsDrinking || IsSliding))
         {
             Destroy(this.gameObject);
             // TODO: get points for getting rid of customer
+        }
+
+        if (collider.gameObject.CompareTag("BarEnd") && !IsDrinking)
+        {
+            GameManager.instance.levelManager.PlayerMissedCustomer = true;
         }
     }
 }

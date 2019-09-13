@@ -18,6 +18,11 @@ public class LevelManager : MonoBehaviour
     public float MaxCustomerStopTime = 2.5f;
 
 
+    public bool PlayerMissedCustomer;
+    public bool PlayerMissedEmptyMug;
+    public bool PlayerThrewExtraMug;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,7 +33,15 @@ public class LevelManager : MonoBehaviour
     void Update()
     {
         ShowAllBarTaps();
-        // CheckIfPlayerIsAtTap();
+        CheckIfPlayerLost();
+    }
+
+    private void CheckIfPlayerLost()
+    {
+        if (PlayerMissedCustomer || PlayerMissedEmptyMug || PlayerThrewExtraMug)
+        {
+            // TODO: lose a life and restart level
+        }
     }
 
     private void ShowAllBarTaps()
@@ -55,6 +68,11 @@ public class LevelManager : MonoBehaviour
         {
             // something hit, check that it was a Tap
         }
+    }
+
+    public bool IsPlayerAtBarTap(int tapIndex)
+    {
+        return GetBarTapAtTapIndex(tapIndex).IsPlayerAtTap;
     }
 
     public List<BarTap> GetBarTaps()

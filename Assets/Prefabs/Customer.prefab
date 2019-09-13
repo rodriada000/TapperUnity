@@ -161,11 +161,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9256182799a40b4592bf92754a568b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BeerPrefab: {fileID: 2247375535204651889, guid: d62057e7adcbcb04fa7f31811f23a0ad,
+    type: 3}
   TapIndex: 0
   HorionztalDir: 1
-  MoveSpeed: 2
+  MoveSpeed: 1.5
   SlideSpeed: 8
-  SlideDistance: 6
+  SlideDistance: 4
   IsSliding: 0
   IsDistracted: 0
   IsDrinking: 0

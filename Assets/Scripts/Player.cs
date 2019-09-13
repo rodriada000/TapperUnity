@@ -86,7 +86,7 @@ public class Player : MonoBehaviour
 
         StopFillingBeerIfMoving(horizontalInput, verticalInput);
         
-        AttemptMove<Wall>(horizontalInput, verticalInput);
+        AttemptMove(horizontalInput, verticalInput);
         animator.SetBool("isRunning", IsRunning);
 
         CheckIfAtBarTap();
@@ -148,6 +148,7 @@ public class Player : MonoBehaviour
         beer.HorionztalDir = beerDir;
         beer.IsFilled = true;
         beer.Speed = GameManager.instance.levelManager.PlayerBeerSpeed;
+        beer.TapIndex = this.CurrentTapIndex;
 
         yield return new WaitForSeconds(ServeDelay);
 
@@ -410,18 +411,18 @@ public class Player : MonoBehaviour
         IsShifting = false;
     }
 
-    protected virtual void AttemptMove<T> (int xDir, int yDir) where T : Component
+    protected bool AttemptMove (int xDir, int yDir)
     {
         if (IsShifting || (xDir == 0 && yDir == 0))
         {
             // don't move if shifting or no input in X or Y direction
-            return;
+            return false;
         }
 
         if (xDir != 0 && IsFillingBeer)
         {
             // don't allow running when filling beer
-            return;
+            return false;
         }
 
         if (IsAtCurrentBarTap && xDir != 0)
@@ -430,12 +431,12 @@ public class Player : MonoBehaviour
             BarTap currentTap = GameManager.instance.levelManager.GetBarTapAtTapIndex(CurrentTapIndex);
             if (xDir > 0 && !currentTap.IsFlipped)
             {
-                return;
+                return false;
             }
 
             if (xDir < 0 && currentTap.IsFlipped)
             {
-                return;
+                return false;
             }
         }
 
@@ -445,18 +446,21 @@ public class Player : MonoBehaviour
         }
 
         RaycastHit2D hit;
-        bool canMove = Move(xDir, yDir, out hit);
+        return Move(xDir, yDir, out hit);
 
-        if (hit.transform == null)
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.gameObject.CompareTag("Beer"))
         {
-            return;
-        }
+            Beer beer = collider.gameObject.GetComponent<Beer>();
 
-        T hitComponent = hit.transform.GetComponent<T>();
-
-        if (!canMove && hitComponent != null)
-        {
-            // TODO: do something when collided with BarExit or Wall            
+            if (!beer.IsFilled)
+            {
+                Destroy(beer.gameObject);
+                // TODO: get points for empty mug
+            }
         }
     }
 }

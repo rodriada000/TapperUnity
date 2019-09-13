@@ -9,23 +9,37 @@ public class Beer : MonoBehaviour
 
     public int HorionztalDir;
 
+    public int TapIndex;
+
     public float Speed;
 
-    public LayerMask BlockingLayer;
-    public LayerMask defaultMask;
-    
+    public Sprite EmptyBeerMugSprite;    
 
     private Rigidbody2D rBody;
     private SpriteRenderer spriteRenderer;
 
+
     // Start is called before the first frame update
     void Start()
     {
-        // this.IsFilled = false;
-        // this.HorionztalDir = 0;
-
         rBody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (!IsFilled)
+        {
+            spriteRenderer.sprite = EmptyBeerMugSprite;
+        }
+
+        spriteRenderer.flipX = (HorionztalDir == -1);
+
+        if (spriteRenderer.flipX)
+        {
+            // flip offset if sprite is flipped
+            BoxCollider2D collider = GetComponent<BoxCollider2D>();
+            Vector2 offset = collider.offset;
+            offset.x *= HorionztalDir;
+            collider.offset = offset;
+        }
     }
 
     // Update is called once per frame
@@ -38,17 +52,32 @@ public class Beer : MonoBehaviour
     {
         Vector2 start = transform.position;
         Vector2 end = start + new Vector2(HorionztalDir, 0);
-        RaycastHit2D hit;
 
-        hit = Physics2D.Linecast(start, end, BlockingLayer);
+        Vector3 newPos = Vector3.MoveTowards(rBody.position, end, Speed * Time.deltaTime);
+        rBody.MovePosition(newPos);       
+    }
 
-        if (hit.transform == null)
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.gameObject.CompareTag("Exit") && IsFilled)
         {
-            Vector3 newPos = Vector3.MoveTowards(rBody.position, end, Speed * Time.deltaTime);
-            rBody.MovePosition(newPos);
-
-            
+            Destroy(this.gameObject);
+            GameManager.instance.levelManager.PlayerThrewExtraMug = true;
         }
 
+        if (collider.gameObject.CompareTag("BarEnd") && !IsFilled)
+        {
+            Destroy(this.gameObject);
+
+            if (GameManager.instance.levelManager.IsPlayerAtBarTap(TapIndex))
+            {
+                // TODO: get points for getting empty mug
+            }
+            else
+            {
+                GameManager.instance.levelManager.PlayerMissedEmptyMug = true;
+                // TODO: lose life, animate beer shatter
+            }
+        }
     }
 }

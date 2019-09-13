@@ -172,7 +172,7 @@ MonoBehaviour:
   restartLevelDelay: 1
   ShiftDelay: 0.4
   ShiftSpeed: 50
-  RunSpeed: 2.75
+  RunSpeed: 3.5
   IsRunning: 0
   IsFacingLeft: 0
   IsShifting: 0
