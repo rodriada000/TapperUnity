@@ -11,11 +11,9 @@ public class LevelManager : MonoBehaviour
 
     public float PlayerBeerSpeed = 7.0f;
 
-    public float MinCustomerMoveTime = 1.5f;
-    public float MaxCustomerMoveTime = 3.0f;
+    public List<float> CustomerMoveTimes;
 
-    public float MinCustomerStopTime = 0.5f;
-    public float MaxCustomerStopTime = 2.5f;
+    public List<float> CustomerStopTimes; 
 
 
     public bool PlayerMissedCustomer;
@@ -26,7 +24,6 @@ public class LevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame

@@ -45,6 +45,7 @@ public class Customer : MonoBehaviour
 
     public float MinStopTime = 0.5f;
     public float MaxStopTime = 2.5f;
+    private bool ReturnBeerOnNextUpdate = false;
 
 
     // Start is called before the first frame update
@@ -54,6 +55,7 @@ public class Customer : MonoBehaviour
         IsDrinking = false;
         IsSliding = false;
         IsStopped = false;
+        ReturnBeerOnNextUpdate = false;
 
         currentMoveTime = 0;
         RandomMoveTime = 0;
@@ -69,6 +71,13 @@ public class Customer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (ReturnBeerOnNextUpdate)
+        {
+            StartCoroutine(SpawnEmptyBeerMug());
+            ReturnBeerOnNextUpdate = false;
+            return;
+        }
+
         if (RandomMoveTime == 0)
         {
             RandomMoveTime = Random.Range(MinMoveTime, MaxMoveTime);
@@ -153,23 +162,23 @@ public class Customer : MonoBehaviour
 
     protected IEnumerator DrinkBeer(GameObject beer)
     {
-            Destroy(beer);
+        Destroy(beer);
 
-            IsDrinking = true;
-            animator.SetBool("isDrinking", IsDrinking);
+        IsDrinking = true;
+        animator.SetBool("isDrinking", IsDrinking);
 
-            yield return new WaitForSeconds(DrinkTime);
+        yield return new WaitForSeconds(DrinkTime);
 
-            IsDrinking = false;
-            animator.SetBool("isDrinking", IsDrinking);
+        IsDrinking = false;
+        animator.SetBool("isDrinking", IsDrinking);
 
-            StartCoroutine(SpawnEmptyBeerMug());
+        ReturnBeerOnNextUpdate = true;
     }
 
     protected IEnumerator SpawnEmptyBeerMug()
     {
         // wait until customer is finished sliding or drinking before spawning beer
-        while (IsSliding)
+        while (IsSliding || IsDrinking)
         {
             yield return null;
         }
@@ -201,7 +210,7 @@ public class Customer : MonoBehaviour
         if (collider.gameObject.CompareTag("Exit") && (IsDrinking || IsSliding))
         {
             Destroy(this.gameObject);
-            // TODO: get points for getting rid of customer
+            GameManager.instance.AddToPlayerOneScore(ScoreKey.Customer);            
         }
 
         if (collider.gameObject.CompareTag("BarEnd") && !IsDrinking)

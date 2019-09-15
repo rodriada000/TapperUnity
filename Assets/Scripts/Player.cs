@@ -459,7 +459,7 @@ public class Player : MonoBehaviour
             if (!beer.IsFilled)
             {
                 Destroy(beer.gameObject);
-                // TODO: get points for empty mug
+                GameManager.instance.AddToPlayerOneScore(ScoreKey.EmptyMug);                
             }
         }
     }

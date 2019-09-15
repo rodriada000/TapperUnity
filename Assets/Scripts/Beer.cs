@@ -71,7 +71,7 @@ public class Beer : MonoBehaviour
 
             if (GameManager.instance.levelManager.IsPlayerAtBarTap(TapIndex))
             {
-                // TODO: get points for getting empty mug
+                GameManager.instance.AddToPlayerOneScore(ScoreKey.EmptyMug);
             }
             else
             {

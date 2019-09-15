@@ -69,10 +69,10 @@ public class BarExit : MonoBehaviour
         GameObject customerObj = Instantiate(CustomerPrefab, transform.position + new Vector3(customerDir * customerOffsetX, customerOffsetY, 0), transform.rotation);
         
         Customer customer = customerObj.GetComponent<Customer>();
-        customer.MinMoveTime = GameManager.instance.levelManager.MinCustomerMoveTime;
-        customer.MaxMoveTime = GameManager.instance.levelManager.MaxCustomerMoveTime;
-        customer.MinStopTime = GameManager.instance.levelManager.MinCustomerStopTime;
-        customer.MaxStopTime = GameManager.instance.levelManager.MaxCustomerStopTime;
+        customer.MinMoveTime = GameManager.instance.levelManager.CustomerMoveTimes[0];
+        customer.MaxMoveTime = GameManager.instance.levelManager.CustomerMoveTimes[1];
+        customer.MinStopTime = GameManager.instance.levelManager.CustomerStopTimes[0];
+        customer.MaxStopTime = GameManager.instance.levelManager.CustomerStopTimes[1];
         customer.TapIndex = this.TapIndex;
         customer.HorionztalDir = customerDir;
     }

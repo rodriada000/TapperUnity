@@ -58,3 +58,6 @@ TagManager:
   - name: Beer
     uniqueID: 740882007
     locked: 0
+  - name: UI
+    uniqueID: 3711968637
+    locked: 0
