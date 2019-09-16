@@ -1391,12 +1391,20 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   PlayerBeerSpeed: 6
+  CustomerMoveSpeed: 1.75
+  CustomerSlideSpeed: 7
   CustomerMoveTimes:
   - 1.5
   - 3
   CustomerStopTimes:
   - 0.5
   - 2.5
+  CustomerDrinkTimes:
+  - 1
+  - 2
+  CustomerSlideDistances:
+  - 2
+  - 4
   PlayerMissedCustomer: 0
   PlayerMissedEmptyMug: 0
   PlayerThrewExtraMug: 0

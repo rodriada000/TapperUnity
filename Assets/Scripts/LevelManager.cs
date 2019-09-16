@@ -11,10 +11,17 @@ public class LevelManager : MonoBehaviour
 
     public float PlayerBeerSpeed = 7.0f;
 
+    public float CustomerMoveSpeed;
+    public float CustomerSlideSpeed;
+
+
     public List<float> CustomerMoveTimes;
 
     public List<float> CustomerStopTimes; 
 
+    public List<float> CustomerDrinkTimes;
+
+    public List<float> CustomerSlideDistances;
 
     public bool PlayerMissedCustomer;
     public bool PlayerMissedEmptyMug;
@@ -107,6 +114,5 @@ public class LevelManager : MonoBehaviour
 
         return availableTaps.Where(t => t.TapIndex == maxIndex).FirstOrDefault();
     }
-
 
 }

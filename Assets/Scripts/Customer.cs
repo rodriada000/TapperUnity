@@ -13,14 +13,16 @@ public class Customer : MonoBehaviour
 
     public float SlideSpeed = 8.0f;
 
-    public float SlideDistance = 4f;
+    public float MinSlideDistance = 2f;
+    public float MaxSlideDistance = 4f;
+
+    public float MinDrinkTime = 1f;
+    public float MaxDrinkTime = 2f;
 
     public bool IsSliding;
     public bool IsDistracted;
-
     public bool IsDrinking;
 
-    public float DrinkTime = 1.0f;
 
     public bool CanDrink
     {
@@ -128,7 +130,7 @@ public class Customer : MonoBehaviour
 
     void StartSliding()
     {
-        if (!IsDrinking && !IsSliding)
+        if (IsDrinking || IsSliding)
         {
             return;
         }
@@ -140,8 +142,10 @@ public class Customer : MonoBehaviour
     {
         IsSliding = true;
 
+        float randomSlideDist = Random.Range(MinSlideDistance, MaxSlideDistance);
+
         Vector2 startPosition = transform.position;
-        Vector2 finalPosition = startPosition + new Vector2(HorionztalDir * -1 * SlideDistance, 0);
+        Vector2 finalPosition = startPosition + new Vector2(HorionztalDir * -1 * randomSlideDist, 0);
 
 
         float distanceThreshold = 0.15f;
@@ -158,16 +162,17 @@ public class Customer : MonoBehaviour
         }
 
         IsSliding = false;
+
+        yield return DrinkBeer();
     }
 
-    protected IEnumerator DrinkBeer(GameObject beer)
+    protected IEnumerator DrinkBeer()
     {
-        Destroy(beer);
-
         IsDrinking = true;
         animator.SetBool("isDrinking", IsDrinking);
 
-        yield return new WaitForSeconds(DrinkTime);
+        float randomDrinkTime = Random.Range(MinDrinkTime, MaxDrinkTime);
+        yield return new WaitForSeconds(randomDrinkTime);
 
         IsDrinking = false;
         animator.SetBool("isDrinking", IsDrinking);
@@ -202,7 +207,7 @@ public class Customer : MonoBehaviour
             Beer beer = collider.GetComponent<Beer>();
             if (beer.IsFilled) 
             {
-                StartCoroutine(DrinkBeer(collider.gameObject));
+                Destroy(beer.gameObject);
                 StartSliding();
             }
         }
