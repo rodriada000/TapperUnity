@@ -177,7 +177,7 @@ MonoBehaviour:
   IsFacingLeft: 0
   IsShifting: 0
   IsServing: 0
-  ServeDelay: 0.5
+  ServeDelay: 0.4
   CurrentTapIndex: 0
   IsAtCurrentBarTap: 0
   FillSpeed: 0.05

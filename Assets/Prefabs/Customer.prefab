@@ -71,7 +71,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1985413457
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -167,11 +167,13 @@ MonoBehaviour:
   HorionztalDir: 1
   MoveSpeed: 1.5
   SlideSpeed: 8
-  SlideDistance: 4
+  MinSlideDistance: 2
+  MaxSlideDistance: 4
+  MinDrinkTime: 1
+  MaxDrinkTime: 2
   IsSliding: 0
   IsDistracted: 0
   IsDrinking: 0
-  DrinkTime: 1
   RandomMoveTime: 0
   IsStopped: 0
   MinMoveTime: 1.5

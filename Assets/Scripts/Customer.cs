@@ -189,7 +189,7 @@ public class Customer : MonoBehaviour
         }
 
         float beerOffsetX = 0.25f;
-        float beerOffsetY = -0.25f;
+        float beerOffsetY = -0.35f;
 
         GameObject beerObj = Instantiate(BeerPrefab, transform.position + new Vector3(beerOffsetX * HorionztalDir, beerOffsetY, 0), transform.rotation);
         Beer beer = beerObj.GetComponent<Beer>();

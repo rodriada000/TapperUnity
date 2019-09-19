@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5473893524526237361
+--- !u!1 &3543574402769468582
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,10 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3163547342055589849}
-  - component: {fileID: 1384338702389388142}
+  - component: {fileID: 8696057190147258846}
+  - component: {fileID: 5177465635777290478}
+  - component: {fileID: 3543574402769468581}
+  - component: {fileID: 3543574402769468580}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -17,13 +19,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3163547342055589849
+--- !u!4 &8696057190147258846
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5473893524526237361}
+  m_GameObject: {fileID: 3543574402769468582}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.39605278, y: -0.12566312, z: -0.004298196}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -31,15 +33,70 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1384338702389388142
+--- !u!114 &5177465635777290478
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5473893524526237361}
+  m_GameObject: {fileID: 3543574402769468582}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 40ce504dc9bcd834e8b6e6b71b1ce576, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelManager: {fileID: 0}
+  levelUIManager: {fileID: 0}
+  PlayerOneScore: 0
+  PlayerOneCurrentLevel: 0
+--- !u!114 &3543574402769468581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3543574402769468582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0978a7ec167ffc2419653a977d450584, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blockingLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  itemsLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  PlayerBeerSpeed: 6
+  CustomerMoveSpeed: 1.75
+  CustomerSlideSpeed: 7
+  CustomerMoveTimes:
+  - 1.5
+  - 3
+  CustomerStopTimes:
+  - 0.5
+  - 2.5
+  CustomerDrinkTimes:
+  - 1
+  - 2
+  CustomerSlideDistances:
+  - 2
+  - 4
+  PlayerMissedCustomer: 0
+  PlayerMissedEmptyMug: 0
+  PlayerThrewExtraMug: 0
+--- !u!114 &3543574402769468580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3543574402769468582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d432317cb3a6ba41b637d9131386430, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerOneScoreText: {fileID: 0}
+  CurrentLevelText: {fileID: 0}
+  CurrentLevelTextBackground: {fileID: 0}
