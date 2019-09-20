@@ -20,12 +20,10 @@ public class MainMenu : MonoBehaviour
 
         if (player1Pressed)
         {
-            SceneManager.LoadScene("Level1");
             GameManager.instance.StartGame(isTwoPlayer: false); 
         }
         else if (player2Pressed)
         {
-            SceneManager.LoadScene("Level1");
             GameManager.instance.StartGame(isTwoPlayer: true); 
         }
     }

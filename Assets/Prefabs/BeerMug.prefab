@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2247375535204651894}
   - component: {fileID: 2247375535204651895}
   - component: {fileID: 2247375535204651888}
+  - component: {fileID: 5433954550787472291}
   m_Layer: 9
   m_Name: BeerMug
   m_TagString: Beer
@@ -146,3 +147,22 @@ MonoBehaviour:
   TapIndex: 0
   Speed: 0
   EmptyBeerMugSprite: {fileID: 21300038, guid: a31e0a9c2a73b7242af731ad0557f1d1, type: 3}
+--- !u!95 &5433954550787472291
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2247375535204651889}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 47e6e0d43d74e6d47ab862fe65a9e913, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

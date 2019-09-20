@@ -42,6 +42,7 @@ TextureImporter:
     21300074: Tapper_SpriteSheet_IdleLever_5
     21300076: Tapper_SpriteSheet_IdleLever_6
     21300078: Tapper_SpriteSheet_IdleLever_7
+    21300080: EmptyBeerMug_Sideways
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -930,6 +931,26 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 4557bd68e22fc134b9e06b586a29b6ef
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EmptyBeerMug_Sideways
+      rect:
+        serializedVersion: 2
+        x: 436
+        y: 1066
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb99dc00f75d9b84797448dece55f60a
       vertices: []
       indices: 
       edges: []

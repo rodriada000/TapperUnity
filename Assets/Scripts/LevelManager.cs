@@ -162,14 +162,14 @@ public class LevelManager : MonoBehaviour
         LevelSettings level1 = new LevelSettings()
         {
             Level = 1,
-            PlayerBeerSpeed = 4.0f,
-            CustomerMoveSpeed = 2,
-            CustomerSlideSpeed = 6
+            PlayerBeerSpeed = 6.0f,
+            CustomerMoveSpeed = 2f,
+            CustomerSlideSpeed = 5
         };
         level1.SetCustomerMoveTimes(0.5f, 1.0f);
-        level1.SetCustomerStopTimes(1f, 1.5f);
-        level1.SetCustomerDrinkTimes(1.0f, 2.0f);
-        level1.SetCustomerSlideDistances(6.0f, 8.0f);
+        level1.SetCustomerStopTimes(1.5f, 2f);
+        level1.SetCustomerDrinkTimes(1.0f, 1.75f);
+        level1.SetCustomerSlideDistances(6.0f, 7.0f);
 
         level1.AddCustomersToBarTap(1, new List<float>() { 0.25f });
         level1.AddCustomersToBarTap(2, new List<float>() { 0.25f });
@@ -181,8 +181,8 @@ public class LevelManager : MonoBehaviour
         LevelSettings level2 = new LevelSettings()
         {
             Level = 2,
-            PlayerBeerSpeed = 4.0f,
-            CustomerMoveSpeed = 2,
+            PlayerBeerSpeed = 6.0f,
+            CustomerMoveSpeed = 1.5f,
             CustomerSlideSpeed = 6
         };
         level2.SetCustomerMoveTimes(0.5f, 1.0f);

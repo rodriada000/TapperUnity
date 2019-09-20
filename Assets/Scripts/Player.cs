@@ -140,7 +140,7 @@ public class Player : MonoBehaviour
         }
 
         float beerOffsetX = 1.6f;
-        float beerOffsetY = 0.6f;
+        float beerOffsetY = 0.7f;
 
 
         GameObject beerObj = Instantiate(BeerPrefab, transform.position + new Vector3(beerOffsetX * beerDir, beerOffsetY, 0), transform.rotation);
@@ -462,5 +462,10 @@ public class Player : MonoBehaviour
                 GameManager.instance.AddToCurrentPlayerScore(ScoreKey.EmptyMug);                
             }
         }
+    }
+
+    public void TriggerMissAnimation()
+    {
+        animator.SetTrigger("playerMiss");
     }
 }

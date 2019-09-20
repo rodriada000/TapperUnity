@@ -14,6 +14,8 @@ public class LevelUIManager : MonoBehaviour
 
     public RectTransform CurrentLevelTextBackground;
 
+    public UnityEngine.UI.Image ReadyToServeImage;
+
 
     void OnEnable()
     {
@@ -29,7 +31,7 @@ public class LevelUIManager : MonoBehaviour
 
     void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
     {
-        GetTextComponents();
+        GetUIComponents();
         SetPlayerOneScoreText(GameManager.instance.PlayerOneScore);
         SetPlayerTwoScoreText(GameManager.instance.PlayerTwoScore);
 
@@ -47,7 +49,7 @@ public class LevelUIManager : MonoBehaviour
     {
     }
 
-    public void GetTextComponents()
+    public void GetUIComponents()
     {
         GameObject textObj = GameObject.Find("Player1Score_Text");
 
@@ -75,6 +77,13 @@ public class LevelUIManager : MonoBehaviour
         if (lvlPanelObj != null)
         {
             CurrentLevelTextBackground = lvlPanelObj.GetComponent<RectTransform>();
+        }
+
+        GameObject readyToServePanelObj = GameObject.Find("ReadyToServePanel");
+
+        if (readyToServePanelObj != null)
+        {
+            ReadyToServeImage = readyToServePanelObj.GetComponent<Image>();
         }
     }
 
@@ -131,5 +140,13 @@ public class LevelUIManager : MonoBehaviour
         }
 
         CurrentLevelTextBackground.sizeDelta = newSize;
+    }
+
+    public void ToggleReadyToServeImage(bool displayImage)
+    {
+        if (ReadyToServeImage != null)
+        {
+            ReadyToServeImage.enabled = displayImage;
+        }
     }
 }

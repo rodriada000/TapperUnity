@@ -51,6 +51,8 @@ public class GameManager : MonoBehaviour
 
     public GameMode SelectedGameMode;
 
+    public bool HasLevelStarted;
+
     public int CurrentPlayer = 1;
 
     public int PlayerOneScore;
@@ -62,6 +64,41 @@ public class GameManager : MonoBehaviour
     public int PlayerTwoCurrentLevel;
     public int PlayerTwoLives;
 
+    void OnEnable()
+    {
+        //Tell our 'OnLevelFinishedLoading' function to start listening for a scene change as soon as this script is enabled.
+        SceneManager.sceneLoaded += OnLevelFinishedLoading;
+    }
+
+    void OnDisable()
+    {
+        //Tell our 'OnLevelFinishedLoading' function to stop listening for a scene change as soon as this script is disabled.
+        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+    }
+
+    void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name != "MainMenuScene")
+        {
+            HasLevelStarted = false;
+
+            // when a level finishes loading then display the 'get ready to serve' screen for few seconds
+            levelUIManager.ToggleReadyToServeImage(displayImage: true);
+
+            StartCoroutine(HideReadyToServeImageAndStartLevel());
+        }
+    }
+
+    protected IEnumerator HideReadyToServeImageAndStartLevel()
+    {
+        float displayTime = 2.5f;
+
+        yield return new WaitForSeconds(displayTime);
+
+        levelUIManager.ToggleReadyToServeImage(displayImage: false);
+        HasLevelStarted = true;
+    }
+    
     // Awake is called before the first frame update
     void Awake()
     {
@@ -114,6 +151,8 @@ public class GameManager : MonoBehaviour
         PlayerTwoLives = 3;
 
         levelManager.CurrentLevel = levelManager.AllLevels[0];
+
+        SceneManager.LoadScene("Level1");
     }
 
     internal void AddToCurrentPlayerScore(ScoreKey toAdd)
