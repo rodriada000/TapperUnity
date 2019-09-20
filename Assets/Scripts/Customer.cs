@@ -195,7 +195,7 @@ public class Customer : MonoBehaviour
         Beer beer = beerObj.GetComponent<Beer>();
         beer.HorionztalDir = HorionztalDir;
         beer.IsFilled = false;
-        beer.Speed = GameManager.instance.levelManager.PlayerBeerSpeed * 0.5f;
+        beer.Speed = GameManager.instance.levelManager.GetPlayerBeerSpeed() * 0.5f;
         beer.TapIndex = this.TapIndex;
     }
 
@@ -215,7 +215,7 @@ public class Customer : MonoBehaviour
         if (collider.gameObject.CompareTag("Exit") && (IsDrinking || IsSliding))
         {
             Destroy(this.gameObject);
-            GameManager.instance.AddToPlayerOneScore(ScoreKey.Customer);            
+            GameManager.instance.AddToCurrentPlayerScore(ScoreKey.Customer);            
         }
 
         if (collider.gameObject.CompareTag("BarEnd") && !IsDrinking)

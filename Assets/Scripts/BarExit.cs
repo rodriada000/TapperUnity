@@ -69,18 +69,18 @@ public class BarExit : MonoBehaviour
         GameObject customerObj = Instantiate(CustomerPrefab, transform.position + new Vector3(customerDir * customerOffsetX, customerOffsetY, 0), transform.rotation);
         
         Customer customer = customerObj.GetComponent<Customer>();
-        customer.MoveSpeed = GameManager.instance.levelManager.CustomerMoveSpeed;
-        customer.SlideSpeed = GameManager.instance.levelManager.CustomerSlideSpeed;
+        customer.MoveSpeed = GameManager.instance.levelManager.GetCustomerMoveSpeed();
+        customer.SlideSpeed = GameManager.instance.levelManager.GetCustomerSlideSpeed();
         customer.TapIndex = this.TapIndex;
         customer.HorionztalDir = customerDir;
         
-        customer.MinMoveTime = GameManager.instance.levelManager.CustomerMoveTimes[0];
-        customer.MaxMoveTime = GameManager.instance.levelManager.CustomerMoveTimes[1];
+        customer.MinMoveTime = GameManager.instance.levelManager.GetMinCustomerMoveTime();
+        customer.MaxMoveTime = GameManager.instance.levelManager.GetMaxCustomerMoveTime();
 
-        customer.MinStopTime = GameManager.instance.levelManager.CustomerStopTimes[0];
-        customer.MaxStopTime = GameManager.instance.levelManager.CustomerStopTimes[1];
+        customer.MinStopTime = GameManager.instance.levelManager.GetMinCustomerStopTime();
+        customer.MaxStopTime = GameManager.instance.levelManager.GetMaxCustomerStopTime();
 
-        customer.MinSlideDistance = GameManager.instance.levelManager.CustomerSlideDistances[0];
-        customer.MaxSlideDistance = GameManager.instance.levelManager.CustomerSlideDistances[1];
+        customer.MinSlideDistance = GameManager.instance.levelManager.GetMinCustomerSlideDistance();
+        customer.MaxSlideDistance = GameManager.instance.levelManager.GetMaxCustomerSlideDistance();
     }
 }

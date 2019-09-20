@@ -147,7 +147,7 @@ public class Player : MonoBehaviour
         Beer beer = beerObj.GetComponent<Beer>();
         beer.HorionztalDir = beerDir;
         beer.IsFilled = true;
-        beer.Speed = GameManager.instance.levelManager.PlayerBeerSpeed;
+        beer.Speed = GameManager.instance.levelManager.GetPlayerBeerSpeed();
         beer.TapIndex = this.CurrentTapIndex;
 
         yield return new WaitForSeconds(ServeDelay);
@@ -459,7 +459,7 @@ public class Player : MonoBehaviour
             if (!beer.IsFilled)
             {
                 Destroy(beer.gameObject);
-                GameManager.instance.AddToPlayerOneScore(ScoreKey.EmptyMug);                
+                GameManager.instance.AddToCurrentPlayerScore(ScoreKey.EmptyMug);                
             }
         }
     }

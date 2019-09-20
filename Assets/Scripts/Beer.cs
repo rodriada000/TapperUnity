@@ -71,12 +71,12 @@ public class Beer : MonoBehaviour
 
             if (GameManager.instance.levelManager.IsPlayerAtBarTap(TapIndex))
             {
-                GameManager.instance.AddToPlayerOneScore(ScoreKey.EmptyMug);
+                GameManager.instance.AddToCurrentPlayerScore(ScoreKey.EmptyMug);
             }
             else
             {
                 GameManager.instance.levelManager.PlayerMissedEmptyMug = true;
-                // TODO: lose life, animate beer shatter
+                // TODO: animate beer shatter
             }
         }
     }
